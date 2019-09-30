@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="Devops" basedir=".">
+
+<path id="classpath.base">
+<pathelement location="lib/org.junit.jupiter.api"/>
+<pathelement location="lib/org.junit.jupiter.api_5.4.0.v20190212-2109"/>
+<pathelement location="lib/org.junit.jupiter.api"/>
+
+</path>
+<!--including the required jar files-->
+
+<path id="classpath.test">
+<fileset dir="lib">
+    <include name="*.jar"> 
+	</include>
+ <include name="org.junit.jupiter.api.jar"> 
+	</include>
+</fileset>
+</path>
+
+<target name="test" depends="run, clean"/>
+
+
+
+
+
+
+
+
+<!-- compile block-->
+ <target name="compile">
+   <mkdir dir="build"/> 
+   	<javac srcdir="src" destdir="build" includeantruntime="false">
+   	 <classpath refid="classpath.base"/> 
+	</javac>
+ </target>
+
+<!-- BUILD BLOCK -->
+<target name="build" depends="compile">
+<mkdir dir="build"/>
+<javac srcdir="src" destdir="build" includeantruntime="false" />
+<classpath refid="classpath.test"/>
+<classpath refid="classpath.base"/>
+</target>
+
+
+<!-- Test and build files -->
+<target name="run" depends="build">
+   <junit printsummary="on" haltonfailure="yes">
+	<classpath>
+	 <path refid="classpath.test"/>
+	 <pathelement location="build"/>
+	</classpath>
+	<classpath refid="classpath.base"/>
+	<batchtest>
+	 <fileset dir="src" includes="**/*Test.java" />
+	</batchtest>
+	</junit>
+</target>
+<!-- Clean -->
+<target name="clean">
+	<delete>
+	<fileset dir="." includes="**/*.class"/>
+	</delete>
+<echo message="cleaned"/>
+</target>
+
+</project>
