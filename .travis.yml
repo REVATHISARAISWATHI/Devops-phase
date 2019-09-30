@@ -7,3 +7,4 @@ deploy:
       secret_access_key: $AWS_KEY
       bucket: 'codekillers'
       skip_cleanup: true
+script:mvn site
